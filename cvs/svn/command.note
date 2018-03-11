@@ -1,0 +1,7 @@
+添加所有未添加的文件
+ svn st | grep '^\?' | tr '^\?' ' ' | sed 's/[ ]*//' | sed 's/[ ]/\\ /g' | xargs svn add
+
+提交至服务器
+
+添加忽略
+    svn propedit svn:ignore 路径

@@ -1,0 +1,72 @@
+JSP基本元素
+    一、JSP指令元素
+        属性        定义
+    language=”ScriptLanguage”                   指定JSP Container用什么语言来编译，目前只支持JAVA语言。默认为JAVA
+    extends=”className”                         定义此JSP网页产生的Servlet是继承哪个 
+    import=”importList”                         定义此JSP网页要使用哪些Java API, 多个包使用 ',' 号
+    session=”true|false”                        决定此页面是否使用session对象。默认为true
+    buffer=”none|size in kb”                    决定输出流(Input stream)是否又缓冲区。默认为8kb
+    autoFlush=”true|false”                      决定输出流的缓冲区慢了后是否需要自动清除，缓冲区慢了后会产生异常错误(Exception).默认为true
+    isThreadSafe=”true|false”                   是否支持线程。默认为true
+    errorPage=”url”                             如果此页发生异常，网页会重新指向一个url
+    isErrorPage=”true|false”                    表示此页面是否为错误处理页面。默认为false
+    contentType=”text/html;charset=gb2312”      表示MIME类型和JSP的编码方式。笔者使用例左
+    pageEncoding=”ISO-8859-1”                   编码方式。（笔者已经加入使用的编码）
+    isELLgnored=”true|false”                    表示是否在此JSP页面中EL表达式。true则忽略，反之false则支持。默认为false
+
+        page指令是针对当前页面的指令，常用的page指令有8个:
+        1.<%@page language="java"%>设置jsp中用到的语言,用到的是java，也是目前唯一有效的设定
+        2.<%@page extends="mypackage.myclass"%>设置目前jsp要继承的父类，一般不需要设置,在默认情况下,jsp页面默认的父类是HttpJspBase。
+        3.<%@page import="java.sql.*"% > jsp页面所用到的类
+        4.<%@page errorPage="error.jsp"%> 设置该jsp页面出现异常时所要转到的页面,如果没设定，容器将使用当前的页面显示错误信息
+        5.<%@page isErrorPage="true"%> 设置该jsp页面是否作为错误显示页面,默认是false,如果设置为true,容器则会在当前页面生成一个exception对象,和4拍配使用
+        6.<%@page contentType="text/html;charset=gb2312"%> 设置页面文件格式和编码方式
+        7.<%@page isThreadSafe="true"% > 设置容器以多线程还是单线程运行该jsp页面，默认是true,是多线程。设置为false,则以单线程的方式运行该jsp页面
+        8.<%@page session="true"% > 设置该jsp页面是否可以用到session对象(jsp内置对象，为web容器创建),默认是true,能用到session.设置为false,则用不到
+
+    PS: 使用的jsp指令
+        <%@ include file= "应用文件的路径"%>：在JSP编译时插入一个包含文本或者代码的文件。
+
+    二、JSP小脚本
+        语法：<%java syntax%> PS：java syntax必须要符合java代码规范
+        作用：将java代码嵌入到jsp文件中
+
+        PS: 可以和html代码混合使用
+
+        <%
+            for(int i = 0; i < 5; i++)
+            {
+        %>
+        <input type = "button" value = <%=i%>>
+            <br/>
+        <%
+            }
+        %>
+    
+    三、JSP表达式
+        Syntax: <%= %> 
+        作用：相当于小脚本中的out.print(); 将其中作为一个值进行计算和显示, 结尾不能使用;
+        <%= name%>
+
+    四、JSP声明
+        Syntax: <%! {方法或者属性} %> PS: 相当于成员变量和方法
+        PS: jsp是一个java文件，jsp声明相当于成员变量和方法，JSP小脚本相当于java控制台程序中的main方法。 
+
+    五、JSP注释
+       JSP脚本内部注释：
+            HTML注释：<!-- --> PS：客户端可以看到的注释
+            JSP注释：<%-- --%> PS: 客户端无法看到的注释
+       JSP脚本内部注释：PS; 客户端无法看到的注释
+            单行注释：//
+            多行注释：/** */
+
+JSP页面执行过程
+    1、客户端请求JSP（URL）
+    2、服务端
+        翻译阶段：JSP -> java源文件
+        编译阶段：java源文件 -> class可执行文件
+        执行阶段：执行class文件
+    3、将结果与静态的html代码结合发送到客户断
+    4、断开连接
+
+    PS: 如果代码没有改变，则在执行一次翻译和编译阶段后，后面就不会在执行翻译和编译阶段

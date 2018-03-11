@@ -1,0 +1,4 @@
+#设置u盘设置
+
+##将dbus设为开机启动
+    rc-update add dbus default

@@ -1,0 +1,15 @@
+<web-app>
+    <!-- 设置servlet的名字 -->
+    <servlet>
+        <servlet-name>servletName</servlet-name>
+        <!--将servlet的全类名映射到一个内部名称-->
+        <servlet-class>com.hua.ServletTest</servlet-class>
+    </servlet>
+
+    <!-- 将servlet绑定url -->
+    <sevlet-mapping>
+        <servlet-name>servletName</servlet-name>
+        <!-- 将某个URL映射到Servlet的内部名称 -->
+        <url-pattern>/se</url-pattern>
+    </sevlet-mapping>
+</web-app>

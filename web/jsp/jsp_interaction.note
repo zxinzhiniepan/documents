@@ -1,0 +1,219 @@
+JSP内置对象(API:http://tomcat.apache.org/tomcat-5.5-doc/jspapi/index.html
+                http://tomcat.apache.org/tomcat-5.5-doc/servletapi/)
+
+    JSP九大内置对象：
+        对象名      作用            类型                                        作用域
+        out         输出对象        javax.servlet.jsp.JspWriter                 page
+        request     请求对象        javax.servlet.http.HttpServletRequest       request
+        response    响应对象        javax.servlet.http.HttpServletResponse      page
+        pageContext 文本上下文对象  javax.servlet.jsp.PageContext               page
+        session     会话对象        javax.servlet.http.HttpSession              session
+        application 应用程序对象    javax.servlet.ServletContext                application
+        page        页面对象        java.lang.Object                            page
+        config      配置对象        javax.servlet.ServletConfig                 page
+        exception   异常对象        java.lang.Throwable                         page
+
+    一、输入输出对象
+        1、out对象(javax.servlet.jsp.JspWriter)
+            function: 输出
+            常用方法：
+                clear()：清除掉缓冲区中尚存在的内容。
+                clearBuffer()：此方法清除掉当前缓冲区中尚存在的内容。
+                flush()：清除掉数据流。
+                getBufferSize()：返回缓冲区的内存大小，单位为字节流。如果不进行缓冲区的设置，大小为0。
+                getRemaining()：此方法返回缓冲区还剩下多少字节数可以使用。
+                isAutoFlush()：检查当前缓冲区是设置为自动清空，还是满了就抛出异常。
+                close()：关闭输出流
+                print():向客户端打印数据(将各种类型的数据转换为字符串)
+                println():向客户端打印数据并换行(实际上因为浏览器渲染问题并不会换行,只会打印一个空格字符)(将各种类型的数据转换成字符串)
+                write():向客户端打印数据(字符、字符数组、字符串)
+                PS: 换行使用out.print("<br/>");
+
+                PS:在servlet中通过Response中的getWriter()方法获取。
+
+        2、request对象(javax.servlet.http.HttpServletRequest)
+            function: 接受客户端通过http协议传送到服务器的数据.(头信息，系统信息，请求方式以及请求参数). 作用域为一次请求。
+            常用方法：
+                void setCharacterEncoding(String charset)   指定每个请求的编码格式，可以解决中文乱码问题
+                String getParameter(String name)    根据页面表单组件的名称获得提交数据
+                String[] getParameterValues(String name)    获得一组同名的表单组件的页面提交数据
+                RequestDispathcer getRequestDispatcher(String path) 获取一个RequestDispathcer对象，该对象的forward()可以用于转发
+                getMethod()：返回HTTP请求信息中所使用到的方法名称；
+                getServletPath()：返回请求信息中调用Servlet的URL部分；
+                getQueryString()：返回HTTP GET请求信息中URL之后的查询字符串；
+                getContentType()：返回请求实体的MIME类型；
+                getProtocol()：返回请求信息中的协议名名字与版本号；
+                getPathInfo()：返回有关任何路径信息；
+                getServletName()：返回接受请求的服务器主机；
+                getServletPort()：返回服务器的端口号；
+                getRemoteHost()：返回提交请求的客户机的规范名字；
+                getRemoteAddr()：返回提交请求的客户机的IP地址；
+                getScheme()：返回请求使用的模式（协议）名字；
+                getParameter()：返回客户端通过表单提交过来的参数值。例如request.getParameter(“myname”)，通过该语句来获取客户端传递过来的myname 参数。
+                getContextPath()：返回HTTP 请求中指示请求上下文的部分。
+                getHeaderNames()：返回一个枚举类型，此枚举集合中包含了请求所含有的所有请求名。
+                getAuthType()：返回用于保护Servlet 的认证模式的名字。例如，BASIC，SSL 或者NULL（没有保护）。
+                gtRequestURL()：返回HTTP 请求信息中的第一行从协议名开始直至查询字符串之间的URL 部分。例如，对HTTP GET 请求http://www.zzbsite.com/helloworld?name=johnson&age=20，这个方法将返回http://www.zzbsite.com/helloworld 字符串。
+                gtCountLength()：返回整数，表示请求实体的长度（以字节为单位）。
+                gtUestPrincipal()：返回java.security 类的Principal 对象，其中包含有目前授权用户的名字。
+                iUserInRole(String role)：返回一个布尔值，指示某个授权用户是否包含在某个具体的逻辑角色role 中。
+                gtRemoteHost()：如果用户已经被授权，则返回提交请求的用户的注册名字，否则返回一个NULL。
+
+                PS:中文乱码问题解决
+                    post的编码设置：
+                        request.setCharacterEncoding("utf-8");ps: 这里设置的编码不包括url的编码
+                        ps: 服务
+                    get的编码设置
+                        a、通过构造新的String来解决
+                            String param = request.get
+                            param = new String(param.getBytes("ISO-8859-1"), "UTF-8")   ps: 使用String类来转化编码格式
+                        b、改变URL的编码格式
+                            改变tomcat的安装目录的/conf/server.xml文件
+                            <Connector port = "8080" protocol="HTTP/1.1"
+                                connectionTimeout = "20000"
+                                redirectPort="8443"
+                                URIEncoding="UTF-8">
+                
+                
+        3、response对象(javax.servlet.http.HttpServletResponse)
+            function: 服务器响应（服务器向客户端发送数据）作用域为page
+            method: 
+                void addCookie(Cookie cookie)   向客户端添加cookie
+                void setContentType(String type)    设在http的响应ContentType类型
+                void setCharacterEncoding(String charset) 设置响应所采用的编码类型
+                void sendRedirect(String location)  重定向
+                setContentLength(int len)：此方法用于设置响应头的长度。
+                setContentType(String type)：用于设置HTTP响应的contentType中的MIME类型，其中可以包含字符编码的规则。例如可以把contentType设置为“text/html;charset=GBK”。在Servelet编写过程中，需要调用此方法进行设置，但是在JSP中一般都是使用page指令直接指定contentType的属性。
+                getOutputStream()：此方法返回一个Servlet的输出流。用于在响应中写入二进制数据。Servlet容器不对二进制数据进行编码。
+                getWriter()：此方法返回一个PrintWriter对象，在Servlet编写过程使用的比较频繁，而在JSP文件中，由于out是用getWriter()创建的PrintWriter对象的隐含对象，所以可以直接调用out对象作输出响应。
+                getCharacterEncoding()：该方法获得此时响应所采用的字符编码类型。
+                sendError(int status)：使用指定错误状态码向客户机发送相应的错误信息。
+                sendError(int status, String message)：使用自定义的错误状态码以及描述信息向客户机发送错误的提示信息。
+                setDateHeader(String headername, long date)：把指定的头名称以及日期设置为响应头信息。其中日期是用long值表示的，这是按照从新纪元开始算起的毫秒数。
+                ContainsHeader(String name)：检测指定的头信息是否存在。返回一个布尔类型。
+                setHeader(String headername, String value)：此方法使用指定的头名字以及相应的值来设置头信息。如果此头信息已经设置，则新的值会覆盖掉旧的值。如果头信息已经被发送出去，则此方法的设置将被忽略。
+                addheader(String headername, String value)：把指定的头名字以及相应值添加到头信息当中去。
+                addIntHeader(String headername, int value)：把指定的头名字以及整数值设置为头信息。如果头信息已经设置了，则新的设置值将覆盖掉以前的值。
+                setStatus(int sc)：给响应设置状态的代码。
+                setStatus(int sc, String sm)：为响应设置状态代码以及信息。这是在没有错误的时候使用的
+
+        4、重定向和转发
+            a、转发
+                定义：客户端向服务器发送一个请求, 在服务器内部完成请求的跳转，并将请求的数据绑定到新的页面
+                实现：
+                    RequestDispathcer rd = request.getRequestDispatcher(String url);
+                    rd.forward(request, response);
+                优点：保存了客户端所发送的请求
+                缺点：url地址并没有改变家，只是将转发的内容发送到该页面
+
+            b、重定向
+                定义：客户端向服务器发送一个请求，服务响应的是客户端再向服务器请求一个新的地址，由于发出的是新的请求，所以上次请求的数据也随之消失。
+                实现：
+                    response.sendRedirect(String url);
+                优点：简单，url会改变
+                缺点：无法保存上一次请求的数据
+
+        5、查询字符串应用
+            超链接传递数据
+                实现：<a href  = "url?color=测试">test</a>
+                    数据处理：<%String color = request.getParameter("color");%>将会获得“测试“这个值
+
+                PS:
+                    使用超链接进行数据传递是，采用的是GET请求方式。
+                    当传递多个数据时用&符号来连接。<a href  = "url?color=测试&id=1">test</a>
+
+
+    二、通信控制对象 
+        1、pageContext对象(javax.servlet.jsp.PageContext)
+            function: 提供了在JSP运行时访问和其相关的环境信息的问题。通过pageContext对象可以访问和当前JSP页面相关联的所有作用域，以及一些页面属性
+            method:
+                通过相应的getXXX(),setXXX(),findXXX()方法来管理一些相应的对象
+                getAttribute()：返回与指定范围内名称有关的变量或null，例如：
+                forward(String relativeUrlPath)：把页面重定向到另一个页面或者Servlet组件上。
+                findAttribute()：用来按照页面请求、会话以及应用程序范围的顺序实现对某个已经命名属性的搜索。
+                getException()：返回当前的exception对象。
+                setAttribute()：用来设置默认页面的范围或者指定范围之中的已命名对象。
+                removeAttribute()：用来删除默认页面范围或指定范围之中已命名的对象。
+
+        2、session对象(javax.servlet.http.HttpSession)
+            会话(session)：
+                它是客户端第一次请求时创建，到浏览器关闭（离开该服务器）或者连接超时自动销毁会话
+                sesseionId: 它是jsp为session创建的String类型的ID号，它会发送给客户端，并保存在cookie中。
+            它是jsp被装载时第一个创建的，作用是完成会话期内的管理。
+
+            method:
+                String getId(): 获取sessionId;
+                void setMaxInactiveInterval(int interval): 设置session的非活动时间
+                int getMaxInactiveInterval(): 获取session的非活动时间，以秒为单位。
+                void incalidate(): 设置session对象失效。
+                void setAttribute(String key, Object value): 以key/value的形式将对象保存在session中。
+                Object getAttribute(String key): 通过key来获取保存在session中的value。
+                void removeAttribute(String key): 移除key的相应对象。
+            session的失效:
+                a: 通过session对象的setMaxInactiveInterval()方法来设置
+                b: 通过修改在项目中web.xml文件来设置
+                    <sessin-config>
+                        <session-timeout>10</session-config>
+                    </sessin-config>
+                c: 直接在tomcat的conf文件中的web.xml设置
+
+            PS: 通过Request中的getSession()方法获取
+
+        3、application对象(javax.servlet.ServletContext)
+            类似“全局变量”，用于同一个应用内的所有用户之间的数据共享。只有在服务器关闭application对象才会失效。1
+            method:
+                getRealPath(String path):返回相对路径的真是路径。
+                getAttribute(String name)：返回由name指定名字的application对象的属性的值。返回值是一个Object对象，如果没有，则返回null。
+                getAttributeNames()：返回所有application对象属性的名字，结果集是一Enumeration类型的实例。
+                getInitParameter(String name)：返回由name指定名字的application对象的某个属性的初始值，如果没有参数，就返回null。
+                getServerInfo()：返回Servlet编译器当前版本的信息。
+                setAttribute(String name, Object obj)：将参数Object指定的对象obj添加到application对象中，并为添加的对象指定一个属性。
+                removeAttribute(String name)：删除一个指定的属性。
+            
+            PS: 1、直接获取
+                    ServletContext application = this.getServletContext();
+                2、通过Config对象获取
+                    this.getServletConfig().getServletContext();
+
+    三、Servlet对象
+        1、page对象(java.lang.Object)
+            page对象代表jsp被编译成Servlet，可以用它来调用Servlet类中所定义的方法。相当于java中this
+            method:
+                getClass()：返回当时Object的类。
+                hashCode()：返回此Object的哈希代码。
+                toString()：把此时的Object类转换成字符串。
+                equals(Object o)：比较此对象是否和指定的对象是否相等。
+                copy（Object o）：把此对象复制到指定的对象当中去。
+                clone()：对此对象进行克隆。
+        2、config对象(javax.servlet.ServletConfig)
+            表示Servlet的配置，当一个Servlet初始化时，容器通过这个对象将某些信息传递这个Servlet
+            methid:
+                    getServletContext()：此方法将返回一个含有服务器相关信息的ServletContext对象。
+                    getInitParameter(String name)：返回初始化参数的值。
+                    getInitParameterNames()：返回包含了Servlet初始化所需要的所有参数，返回类型是枚举型。
+
+    四、错误处理对象
+        1、exception对象(java.lang.Throwable)
+            被调用的错误页面的结果，只用在错误页面中才可以使用
+            method: 
+                    getMessage()和getLocalizedMessage()：这两种方法分别返回exception对象的异常消息字符串和本地化语言的异常错误。
+                    printStackTrace()：显示异常的栈跟踪轨迹。
+                    toString()：返回关于异常错误的简单消息描述。
+                    fillInStackTrace()：重写异常错误的栈执行轨迹。
+
+
+cookie
+
+四个作用域
+    一、page
+        在本页中有效，跳出则无效
+    二、request
+        跨页使用，一般用于表单提交
+    三、session
+        在会话期间有效
+    四、application
+        在服务器运行是有效，关闭则失效。
+
+get和post提交区别
+    get将提交数据放在url中
+    post是隐藏的

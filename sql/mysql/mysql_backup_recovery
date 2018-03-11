@@ -1,0 +1,4 @@
+mysql的备份和复原
+复原
+    mysql > source fileURL;
+

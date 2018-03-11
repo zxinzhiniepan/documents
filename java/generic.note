@@ -1,0 +1,32 @@
+泛型编程
+
+1. 泛型类
+    public class Test<T, U>
+    {
+        T var1;
+        U var2;
+        ...
+    }
+
+    实例化泛型
+    Test<Object> ts = new Test<Object>();
+    <>内可以是一个或者多个, 用","分隔开
+
+2. 泛型方法
+   public class Test
+   {
+       public <T> T method(T... args)
+       {
+       }
+   } 
+
+   调用方法
+   Test ts = new Test();
+   ts.<Object>method(Object args);
+   <>内可以省略，jvm可能自动识别类型
+
+3. 类型变量的限制
+    public class Test<T extends Test>{}
+    Test为绑定类型，T应该为其绑定类型的子类型.
+    T extends Class1 & Class2
+    多个用&分隔

@@ -1,0 +1,22 @@
+A.jsp页面本身的编码
+    <%@ page pageEncoding="utf-8"%>
+
+B.浏览器渲染的编码
+    <%@ page contentType = "text/html; charset = utf-8"%>
+
+request请求的编码
+    post的编码设置：
+        request.setCharacterEncoding("utf-8");ps: 这里设置的编码不包括url的编码
+        ps: 服务
+    get的编码设置
+        1、通过构造新的String来解决
+            String param = request.get
+            param = new String(param.getBytes("ISO-8859-1"), "UTF-8")   ps: 使用String类来转化编码格式
+        2、改变URL的编码格式
+            改变tomcat的安装目录的/conf/server.xml文件
+            <Connector port = "8080" protocol="HTTP/1.1"
+                connectionTimeout = "20000"
+                redirectPort="8443"
+                URIEncoding="UTF-8">
+
+PS：一般来说指定了A的编码，则B的编码默认跟A一样
