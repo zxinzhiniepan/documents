@@ -55,7 +55,7 @@
     elfutils
 
 ### 2) 插入额外包
-- gentoo
+- gentoo</br>
     echo "dev-db/oracle-instantclient highlight sdk sqlplus jdbc odbc tools" > /etc/portage/package.use/oracle-instantclient
     emerge -avt oracle-instantclient
 
