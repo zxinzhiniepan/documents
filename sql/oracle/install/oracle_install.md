@@ -56,6 +56,7 @@
 
 ### 2) 插入额外包
 - gentoo
+
     echo "dev-db/oracle-instantclient highlight sdk sqlplus jdbc odbc tools" > /etc/portage/package.use/oracle-instantclient
     emerge -avt oracle-instantclient
 ps:如果无法下载相应的包则到http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html下载相应的包放入/usr/portage/distfiles
