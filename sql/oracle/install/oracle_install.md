@@ -62,26 +62,40 @@
 
 ps:如果无法下载相应的包则到http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html下载相应的包放入/usr/portage/distfiles
 
-## 五、配置用户、组和环境oracle database
+### 3) 配置用户、组和环境oracle database
 ```shell
 # oracle inventory group
 groupadd -g 54321 oinstall
+
 # Create an OSDBA for ASM group
 groupadd -g 54327 asmdba
+
 # Create an OSOPER for asm group
 groupadd -g 54328 asmoper
-create OSDBA group
+
+#create OSDBA group
 groupadd -g 54322 dba
+
 # OSOPER group
 groupadd -g 54323 oper
+
 # Create OSBACKUPDBA group
 groupadd -g 54324 backupdba
+
 # Create the OSDGDBA
 groupadd -g 54325 dgdba
+
 # Create the OSKMDBA group
 group -g 54326 kmdba
+
 # Create the OSRACDBA
 groupadd -g 54330 racdba
+
 # create user
 useradd -u 54321 -g oinstall -G dba,asmdba,backupdba,dgdba,kmdba,racdba oracle
 ```
+
+### 4) 创建安装目录
+mkdir -p /home/oracle/install/oracle
+chown -R oracle:oinstall /home/oracle/install/oracle
+chmod -R /home/oracle/install/oracle
