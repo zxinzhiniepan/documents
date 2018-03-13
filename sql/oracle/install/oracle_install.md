@@ -94,6 +94,39 @@ groupadd -g 54330 racdba
 # create user
 useradd -u 54321 -g oinstall -G dba,asmdba,backupdba,dgdba,kmdba,racdba oracle
 ```
+### 1) 所需要的操作系统和组
+- 创建Oracle Inventory组
+```shell
+# groupadd -g 54321 oinstall
+```
+- 验证
+```shell
+$ grep "oinstall" /etc/group
+oinstall:x:54321:grid,oracle
+```
+使用ID
+```shell
+$ id oracle
+uid=54321(oracle) gid=54321(oinstall) groups=54321(oinstall),54322(dba), 
+54323(oper),54324(backupdba),54325(dgdba),54326(kmdba),54327(asmdba),54330(racdba)
+```
+
+```shell
+$ id grid
+uid=54331(grid) gid=54321(oinstall) groups=54321(oinstall),54322(dba),
+54327(asmdba),54328(asmoper),54329(asmadmin),54330(racdba)
+```
+
+### 2) 具有标准和工作角色分离的组和用户
+
+### 3) 创建操作系统权限组
+
+### 4）创建oracle插入帐号
+
+### 5) 创建Vault用户帐号
+
+### 6) 取消设置oracle插入环境变量
+
 
 ### 4) 创建安装目录
 ```shell
