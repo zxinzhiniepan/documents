@@ -117,11 +117,54 @@ uid=54331(grid) gid=54321(oinstall) groups=54321(oinstall),54322(dba),
 54327(asmdba),54328(asmoper),54329(asmadmin),54330(racdba)
 ```
 
+
 ### 2) 具有标准和工作角色分离的组和用户
 
 ### 3) 创建操作系统权限组
+#### 为ASM创建OSDBA组
+```shell
+# groupadd -g 54327 asmdba
+```
+
+#### 为ASM创建OSOPER组
+```shell
+# groupadd -g 54328 asmoper
+```
+#### 创建OSDBA组
+```shell
+# groupadd -g 54322 dba
+```
+
+#### 创建OSOPER组
+```shell
+# groupadd -g 54323 oper
+```
+
+#### 创建OSBACKUPDBA组
+```shell
+# groupadd -g 54324 backupdba
+```
+
+#### 创建OSDGDBA组
+```shell
+# groupadd -g 54325 dgdba
+```
+
+#### 创建OSKMDBA组
+```shell
+# groupadd -g 54326 kmdba
+```
+
+#### 创建OSRACDBA组
+```shell
+# groupadd -g 54330 racdba
+```
 
 ### 4）创建oracle插入帐号
+#### 创建oracle用户
+```shell
+# useradd -u 54321 -g oinstall -G dba,asmdba,backupdba,dgdba,kmdba,racdba oracle
+```
 
 ### 5) 创建Vault用户帐号
 
