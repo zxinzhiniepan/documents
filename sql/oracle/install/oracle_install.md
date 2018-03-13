@@ -62,7 +62,7 @@
 
 ps:如果无法下载相应的包则到http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html下载相应的包放入/usr/portage/distfiles
 
-### 3) 配置用户、组和环境oracle database
+## 五、 配置用户、组和环境oracle database
 ```shell
 # oracle inventory group
 groupadd -g 54321 oinstall
@@ -96,6 +96,34 @@ useradd -u 54321 -g oinstall -G dba,asmdba,backupdba,dgdba,kmdba,racdba oracle
 ```
 
 ### 4) 创建安装目录
-mkdir -p /home/oracle/install/oracle
-chown -R oracle:oinstall /home/oracle/install/oracle
-chmod -R /home/oracle/install/oracle
+```shell
+mkdir -p /home/oracle/oracle
+chown -R oracle:oinstall /home/install/oracle
+chmod -R /home/oracle/oracle
+```
+
+## 六、配置网络
+
+## 七、存储选项
+
+## 八、配置文件系统存储
+
+## 九、配置存储
+
+## 十、插入和配置Oracle Grid Infrastructure
+
+## 十一、插入Oracle Database
+
+## 十二、插入后操作
+
+## 十三、卸载Oracle Software
+
+## A 手动完成预装
+
+## B 使用Response files插入和配置oracle database
+
+## C 优化
+
+## D 复制数据库
+
+## F 管理数据库端口号
