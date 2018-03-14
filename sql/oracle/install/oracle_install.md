@@ -91,6 +91,23 @@ net.core.wmem_max = 1048576
 
 ##### 4. 重启系统
 
+### 4) 手动设置UDP TCP内核参数
+##### 检查当前设置
+```
+$ cat /proc/sys/net/ipv4/ip_local_port_range
+32768 61000
+```
+
+##### 修改设置
+```
+# echo 9000 65500 > /proc/sys/net/ipv4/ip_local_port_range
+```
+
+##### 重启网路设置
+```
+# /etc/rc.d/init.d/network restart
+```
+
 ## 五、 配置用户、组和环境oracle database
 ```shell
 # oracle inventory group
@@ -230,6 +247,27 @@ chmod -R /home/oracle/oracle
 ## 十二、插入后操作
 
 ## 十三、卸载Oracle Software
+```
+$ ./runInstaller -deinstall -home /u01/app/oracle/product/12.2.0/dbhome_1/
+```
+```
+SQL > shutdown immediate;
+
+lsnrctrl stop
+
+rm /usr/local/bin/coraenv
+rm /usr/local/bin/dbhome
+rm /usr/local/bin/oraenv
+
+rm /etc/oraInst.Ioc
+rm /etc/oratab
+
+rm -r ORCLfmap
+
+rm ~oracle/*
+
+```
+
 
 ## A 手动完成预装
 
