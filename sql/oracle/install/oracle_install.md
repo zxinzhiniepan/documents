@@ -253,18 +253,18 @@ $ ./runInstaller -deinstall -home /u01/app/oracle/product/12.2.0/dbhome_1/
 ```
 SQL > shutdown immediate;
 
-lsnrctrl stop
+$ lsnrctrl stop
 
-rm /usr/local/bin/coraenv
-rm /usr/local/bin/dbhome
-rm /usr/local/bin/oraenv
+$ rm /usr/local/bin/coraenv
+$ rm /usr/local/bin/dbhome
+$ rm /usr/local/bin/oraenv
 
-rm /etc/oraInst.Ioc
-rm /etc/oratab
-
-rm -r ORCLfmap
-
-rm ~oracle/*
+$ rm /etc/oraInst.Ioc
+$ rm /etc/oratab
+ 
+$ rm -r ORCLfmap
+ 
+$ rm ~oracle/*
 
 ```
 
