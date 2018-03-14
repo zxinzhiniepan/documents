@@ -62,6 +62,22 @@
 
 ps:如果无法下载相应的包则到http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html下载相应的包放入/usr/portage/distfiles
 
+### 3) 内核参数设置
+##### 1. 编辑或者创建 /etc/sysctl.d/97-oracle-database-sysctl.conf 添加以下参数
+```conf
+fs.aio-max-nr = 1048576
+fs.file-max = 6815744
+kernel.shmall = 2097152
+kernel.shmmax = 4294967295
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+```
+
 ## 五、 配置用户、组和环境oracle database
 ```shell
 # oracle inventory group
