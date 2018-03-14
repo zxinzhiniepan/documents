@@ -78,6 +78,19 @@ net.core.wmem_default = 262144
 net.core.wmem_max = 1048576
 ```
 
+##### 2. 改变当前内核参数
+```
+# /sbin/sysctl --system
+```
+
+##### 3. 确认参数已经正确设置
+```
+# /sbin/sysctl -a
+
+```
+
+##### 4. 重启系统
+
 ## 五、 配置用户、组和环境oracle database
 ```shell
 # oracle inventory group
