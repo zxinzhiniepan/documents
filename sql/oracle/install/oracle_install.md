@@ -243,6 +243,30 @@ chown -R oracle:oinstall /home/install/oracle
 chmod -R /home/oracle/oracle
 ```
 
+### 2) 修改.bashrc(必须)
+```
+export PATH=$PATH:/usr/local/bin
+
+# java
+export JAVA_HOME=/opt/developments/java/bin/jdk/jdk1.8.0_162
+# java9
+#export JAVA_HOME=/opt/developments/java/bin/jdk/jdk-9.0.4
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
+
+# Put your fun stuff here.
+export ORACLE_BASE=/home/oracle/app/oracle
+export ORACLE_HOME=/home/oracle/app/oracle/product/db
+export ORACLE_SID=xdb
+export ORACLE_INVENTORY=/home/oracle/app/oraInventory
+export ORACLE_BASE ORACLE_SID ORACLE_HOME
+export PATH=$ORACLE_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export TMP=/tmp
+export EDITOR=vim
+export VISUAL=vim
+```
 
 ## 十二、插入后操作
 
