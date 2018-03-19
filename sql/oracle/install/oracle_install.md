@@ -78,7 +78,7 @@ net.core.wmem_default = 262144
 net.core.wmem_max = 1048576
 ```
 
-##### 2. 编辑/etc/security/limits.conf
+##### 2. 编辑添加/etc/security/limits.conf以下参数
 ```conf
 # oracle settings
 oracle           soft    nproc   2047
