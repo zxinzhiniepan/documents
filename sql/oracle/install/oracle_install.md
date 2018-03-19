@@ -78,12 +78,21 @@ net.core.wmem_default = 262144
 net.core.wmem_max = 1048576
 ```
 
-##### 2. 改变当前内核参数
+##### 2. 编辑/etc/security/limits.conf
+```conf
+# oracle settings
+oracle           soft    nproc   2047
+oracle           hard    nproc   16384
+oracle           soft    nofile  1024
+oracle           hard    nofile  65536
+```
+
+##### 3. 改变当前内核参数
 ```
 # /sbin/sysctl --system
 ```
 
-##### 3. 确认参数已经正确设置
+##### 4. 确认参数已经正确设置
 ```
 # /sbin/sysctl -a
 
