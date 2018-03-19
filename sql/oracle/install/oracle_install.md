@@ -43,17 +43,9 @@
 
 ## 四、操作系统的配置
 ### 1) 依赖包
-    rpm
-    ksh
-    xdpyinfo
-    libXi
-    libXtst
-    libXau
-    libXi
-    libaio
-    sysstat
-    elfutils
-    unixODBC
+```shell
+emerge -avt rpm ksh xdpyinfo libXi libXtst libXau libXi libaio sysstat elfutils unixODBC
+```
 
 ### 2) 插入额外包
 #### gentoo</br>
