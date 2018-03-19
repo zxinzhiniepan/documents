@@ -44,7 +44,7 @@
 ## 四、操作系统的配置
 ### 1) 依赖包
 ```shell
-emerge -avt rpm ksh xdpyinfo libXi libXtst libXau libXi libaio sysstat elfutils unixODBC
+emerge -avt rpm ksh xdpyinfo libXi libXtst libXau libXi libaio sysstat elfutils unixODBC sys-libs/libstdc++-v3
 ```
 
 ### 2) 插入额外包
