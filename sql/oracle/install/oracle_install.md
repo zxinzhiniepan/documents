@@ -1,4 +1,4 @@
-#  oracle_install.md
+#  安装oracle(Gentoo)
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-11 13:48
 
