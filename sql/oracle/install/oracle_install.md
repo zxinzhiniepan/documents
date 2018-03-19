@@ -71,6 +71,28 @@ net.core.wmem_max = 1048576
 ```
 
 ##### 2. 编辑/etc/security/limits.conf添加以下参数
+- 检查
+ 1.登录oracle用户
+ 2. 检测
+    ```shell
+    $ ulimit -Sn
+    1024
+    $ ulimit -Hn
+    65536
+
+
+    $ ulimit -Su
+    2047
+    $ ulimit -Hu
+    16384
+
+    $ ulimit -Ss
+    10240
+    $ ulimit -Hs
+    32768
+    ```
+
+- 有必要修改/etc/security/limits.conf文件
 ```conf
 # oracle settings
 oracle           soft    nproc   2047
