@@ -266,7 +266,7 @@ chown -R oracle:oinstall /home/install/oracle
 chmod -R /home/oracle/oracle
 ```
 
-### 2) 修改.bashrc(必须)
+### 2) 修改.bashrc(必须安装完数据库再添加,各个值比寻对应)
 ```
 export PATH=$PATH:/usr/local/bin
 
@@ -281,7 +281,8 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 # Put your fun stuff here.
 export ORACLE_BASE=/home/oracle/app/oracle
 export ORACLE_HOME=/home/oracle/app/oracle/product/db
-export ORACLE_SID=xdb
+# 其中的ORACLE_SID的值必须对应数据库的sid
+export ORACLE_SID=orcl
 export ORACLE_INVENTORY=/home/oracle/app/oraInventory
 export ORACLE_BASE ORACLE_SID ORACLE_HOME
 export PATH=$ORACLE_HOME/bin:$PATH
