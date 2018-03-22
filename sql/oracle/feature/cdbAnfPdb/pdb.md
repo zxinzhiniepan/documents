@@ -132,6 +132,24 @@ Oracle Database 12c Enterprise Edition Release 12.2.0.1.0 - 64bit Production
 ZHANGHUA@ORCLPDB> 
 ```
 
+不配置tnsname.ora连接数据库
+```
+$ sqlplus zhanghua/zhanghua@localhost:1521/orclpdb.xinzhiniepan.com
+
+SQL*Plus: Release 12.2.0.1.0 Production on Thu Mar 22 11:49:55 2018
+
+Copyright (c) 1982, 2016, Oracle.  All rights reserved.
+
+Last Successful login time: Thu Mar 22 2018 11:47:44 +08:00
+
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.2.0.1.0 - 64bit Production
+
+ZHANGHUA@ORCLPDB> 
+
+```
+
+
 9. 创建表空间
 
 ```
