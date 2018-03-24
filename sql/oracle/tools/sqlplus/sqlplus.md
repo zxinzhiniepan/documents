@@ -42,4 +42,9 @@ SQL> set numwidth 12;     --输出number类型域长度，缺省为10
 SQL> set termout off;    --显示脚本中的命令的执行结果，缺省为on
 SQL> set serveroutput on;  --设置允许显示输出类似dbms_output
 SQL> set verify off                     --可以关闭和打开提示确认信息old 1和new 1的显示.
-```o
+```
+## sqlplus中的一些常用命令
+#### 1. 清屏命令
+```
+ZHANGHUA@ORCLPDB> clear screen
+```
