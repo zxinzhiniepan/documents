@@ -35,16 +35,22 @@ select * from nls_database_parameters
 
 ## 客户端字符集
       如果服务器端的字符集是正确的，而在客户端下，如sqlplus仍然不能正确显示中文，这一般是由于服务器端的字符集设定与客户端的字符集设定不同造成的。只要将两者修改一致就可以解决问题。
-    1）查询客户端字符集
-    select * from nls_instance_parameters
-    客户端字符集环境select * from nls_instance_parameters,其来源于v$parameter，
-    表示客户端的字符集的设置，可能是参数文件，环境变量或者是注册表
-        select userenv('language') from dual;
-    会话字符集环境 select * from nls_session_parameters，其来源于v$nls_parameters，表示会话自己的设置，可能是会话的环境变量或者是alter session完成，如果会话没有特殊的设置，将与nls_instance_parameters一致。 
-    客户端的字符集要求与服务器一致，才能正确显示数据库的非Ascii字符。如果多个设置存在的时候，alter session>环境变量>注册表>参数文件
-    字符集要求一致，但是语言设置却可以不同，语言设置建议用英文。如字符集是zhs16gbk，则nls_lang可以是American_America.zhs16gbk。  或者.zhs16gbk。注意zhs16gbk前面那个点是必须的哦！！
+1）查询客户端字符集
+```
+select * from nls_instance_parameters
+```
 
-   2） 修改客户端字符集
+客户端字符集环境select * from nls_instance_parameters,其来源于v$parameter，
+表示客户端的字符集的设置，可能是参数文件，环境变量或者是注册表
+```
+select userenv('language') from dual;
+```
+
+会话字符集环境 select * from nls_session_parameters，其来源于v$nls_parameters，表示会话自己的设置，可能是会话的环境变量或者是alter session完成，如果会话没有特殊的设置，将与nls_instance_parameters一致。 
+客户端的字符集要求与服务器一致，才能正确显示数据库的非Ascii字符。如果多个设置存在的时候，alter session>环境变量>注册表>参数文件
+字符集要求一致，但是语言设置却可以不同，语言设置建议用英文。如字符集是zhs16gbk，则nls_lang可以是American_America.zhs16gbk。  或者.zhs16gbk。注意zhs16gbk前面那个点是必须的哦！！
+
+2） 修改客户端字符集
 oracle 的sqlplus会去读取OS中环境变量下的nls_lang信息（关键在这里，通过以上命令查看
 ```
 select * from nls_database_parameters 显示
