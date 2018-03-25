@@ -2,6 +2,10 @@
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-25 09:53
 
+## 静默安装(接oracle_before_install.md)
+#### 先完成准备工作
+
+## 图形安装
 ![oracle install](./picture/oracle_install01.jpg)
 ![oracle install](./picture/oracle_install02.jpg)
 ![oracle install](./picture/oracle_install03.jpg)
