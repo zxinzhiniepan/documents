@@ -290,6 +290,9 @@ export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
 export TMP=/tmp
 export EDITOR=vim
 export VISUAL=vim
+# 字符设置(解决字符乱码,服务器字符设置为： AL32UTF8)
+export NLS_LANGUAGE=AMERICAN_AMERICA.UTF8
+export NLS_LANG=AMERICAN_AMERICA.UTF8
 ```
 
 ## 十二、插入后操作
