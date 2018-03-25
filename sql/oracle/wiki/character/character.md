@@ -46,14 +46,12 @@ select * from nls_database_parameters
 
    2） 修改客户端字符集
 oracle 的sqlplus会去读取OS中环境变量下的nls_lang信息（关键在这里，通过以上命令查看
-
+```
 select * from nls_database_parameters 显示
 
 NLS_LANGUAGE                   AMERICAN                               
 NLS_TERRITORY                  AMERICA                                
 NLS_CURRENCY                   $   
-
- 
 
 select * from nls_instance_parameters 显示
 
@@ -64,11 +62,12 @@ NLS_DATE_LANGUAGE
 NLS_DATE_FORMAT                                                       
 NLS_CURRENCY     
 
- select * from nls_session_parameters 显示  
+select * from nls_session_parameters 显示  
 
 NLS_LANGUAGE                   SIMPLIFIED CHINESE                     
 NLS_TERRITORY                  CHINA                                  
 NLS_CURRENCY                   RMB  
+```
 
  
 
@@ -77,7 +76,7 @@ NLS_CURRENCY                   RMB
 另一个数据库实例sc
 
 数据库字符集
-
+```
 select * from nls_database_parameters 显示
 
 NLS_LANGUAGE                   AMERICAN                               
@@ -92,21 +91,23 @@ NLS_SORT
 NLS_DATE_LANGUAGE                                                     
 NLS_DATE_FORMAT                                                       
 NLS_CURRENCY    
-
- 
+```
 
 在linux下
-
- select * from nls_session_parameters 显示  
+```
+select * from nls_session_parameters 显示  
 
 NLS_LANGUAGE                   AMERICAN                               
 NLS_TERRITORY                  AMERICA    
+```
 
 用TOD 在windows下显示
 
+```
 NLS_LANGUAGE                   SIMPLIFIED CHINESE                     
 NLS_TERRITORY                  CHINA                                  
 NLS_CURRENCY                   RMB  
+```
 
 这个我还搞不明白为什么windows与linux会话字符集为什么不一样。
 
@@ -122,6 +123,7 @@ export LANG=en_US.UTF-8
 
 再次查看客户端字符集
 
+```
 select * from nls_instance_parameters 还是显示
 
 NLS_LANGUAGE                   SIMPLIFIED CHINESE                     
@@ -130,16 +132,19 @@ NLS_SORT
 NLS_DATE_LANGUAGE                                                     
 NLS_DATE_FORMAT                                                       
 NLS_CURRENCY     
+```
 
 但
 
- select * from nls_session_parameters 显示  
+```
+select * from nls_session_parameters 显示  
 
 NLS_LANGUAGE        AMERICAN
 
 NLS_TERRITORY         AMERICA
 
 NLS_CURRENCY         $
+```
 
 看来只要本次会话字符集正确就没问题了，经过验证确实如此，用
 
@@ -147,6 +152,7 @@ alter session set NLS_LANGUAGE=‘AMERICAN’后本次会话也不会出现乱�
 ）
 NSL_LANG包括三个部分（语言_地区.字符集）就是V$NLS_PARAMETERS表中的NLS_LANGUAGE,NLS_TERRITORY,NLS_CHARACTERSET
 例如可以在cmd中键入
+```
 set nls_lang="Simplified chinese_china.utf8"
 set nls_lang="american_america.us7ascii"
 set nls_lang="american_america.zhs16gbk"
@@ -154,6 +160,7 @@ set nls_lang="Simplified chinese_china.zhs16gbk"
 set nls_lang=".utf8"
 set nls_lang=".zhs16gbk"
 set nls_lang=".us7ascii"
+```
 
 unix下类似, 不过nls_lang要大写NLS_LANG, 在.profile或这.bash_profile(根据你用的shell)里更改NLS_LANG可以长久保持环境变量值.
 
@@ -164,7 +171,8 @@ unix下类似, 不过nls_lang要大写NLS_LANG, 在.profile或这.bash_profile(�
 
 ## 结论
 增加添加系统字符的支持(Gentoo)
-    ```
+
+```
 #  eselect locale list
 Available targets for the LANG variable:
 [1]   C
@@ -178,7 +186,9 @@ Available targets for the LANG variable:
 [9]   zh_CN.utf8
 [ ]   (free form)
 ```
+
 添加环境变量
+
 ```
 export NLS_LANGUAGE=AMERICAN_AMERICA.UTF8
 export NLS_LANG=AMERICAN_AMERICA.UTF8
