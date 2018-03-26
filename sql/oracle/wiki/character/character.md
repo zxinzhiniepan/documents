@@ -194,6 +194,8 @@ Available targets for the LANG variable:
 [ ]   (free form)
 ```
 
+数据库字符设置为AL32UTF8
+
 添加环境变量
 
 ```
