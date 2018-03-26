@@ -4,7 +4,7 @@
 
 
 
-创建一个struts2的[步骤][foo01]
+创建一个struts2的[步骤] [foo01].
 [foo01]: https://struts.apache.org/getting-started/how-to-create-a-struts2-web-application.html "官方文档"
 创建web项目
 创建页面(jsp)
