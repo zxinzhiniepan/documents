@@ -2,7 +2,7 @@
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-26 08:25
 
-创建一个struts2的步骤[foo]:<https://struts.apache.org/getting-started/how-to-create-a-struts2-web-application.html> "官方文档":
+创建一个struts2的步骤 [foo]:<https://struts.apache.org/getting-started/how-to-create-a-struts2-web-application.html> "官方文档"
 创建web项目
 创建页面(jsp)
 搭建struts2的运行环境(导入jar包到classpath)
