@@ -38,8 +38,7 @@ c. namespace: 可选属性
 <package name="test" extends="struts-default"> ，如果未指定命名空间，则命名空间默认为 “ namespace="" ”。
 默认命名空间里的Action可以处理任何命名空间下的Action请求。例如，如果存在URL为/barspace/bar.action的请求，并且
 /barspace的命名空间下没有名为bar的Action，
-则默认命名空间下名为bar的Action也会处理用户请求。
-但根命名空间下的Action只处理根命名空间下的Action的请求，
+则默认命名空间下名为bar的Action也会处理用户请求。 但根命名空间下的Action只处理根命名空间下的Action的请求，
 这是根命名空间和默认命名空间的区别。
 命名空间只有一个级别。如果请求的URL是/bookservice/search/get.action，
 系统将先在/bookservice/search的命名空间下查找名为get的Action，
@@ -62,5 +61,137 @@ d. 子元素啊action
 2. 数据转移场所
 3. 返回结果字符串
 
-## method(action子元素)属性
+## method(action子元素)属性(同一个Action类实现不同的功能/请求)
+method可以指定Action类中任何方法处理请求(方法需与execute方法一致)
 通过配置action子元素中的method属性减少Action代码
+PS:struts2根据action元素中method查找执行方法的两种途径
+a.与method一致的方法
+b.查找doMethod()形式的方法。
+```java
+package org.hua.struts.action;
+
+ 
+/**
+ * UserAction
+ * @author xinzhiniepan
+ * @version 1.0
+ * @since 2018-03-27 19:35:03
+ */
+import org.hua.struts.pojo.User;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ActionContext;
+import java.util.Map;
+public class UserAction extends ActionSupport
+{
+    private User user;
+    private String source;
+
+    public String login()
+    {
+        ActionContext ac = ActionContext.getContext();
+        Map<String, Object> session = ac.getSession();
+        session.put("user",user);
+        setSource("登录成功！");
+
+        return "success";
+    }
+
+    public String register()
+    {
+        ActionContext ac = ActionContext.getContext();
+        Map<String, Object> session = ac.getSession();
+        session.put("user",user);
+        setSource("注册成功！");
+        return "success";
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setSource(String source)
+    {
+        this.source = source;
+    }
+    public String getSource()
+    {
+        return source;
+    }
+}
+```
+struts.xml
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <package name="user" namespace="" extends="struts-default">
+        <action name="login" class="org.hua.struts.action.UserAction" method="login">
+            <result name="success">/success.jsp</result>
+        </action>
+
+        <action name="register" class="org.hua.struts.action.UserAction" method="register">
+            <result name="success">/success.jsp</result>
+        </action>
+    </package>
+</struts>
+
+```
+注册页面
+```
+<%@ page contentType="text/html;Charset=UTF-8" pageEncoding="UTF-8" language = "java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "s" uri = "/struts-tags"%>
+<%@ taglib prefix="" tagdir="/WEB-INF/tags"%>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv = "Content-Type" content = "text/html charset=UTF-8">
+	<title>Login</title>
+</head>
+<body>
+    <header>
+        <s:form action="register" method="post">
+            <s:textfield name="user.name" label="用名"/>
+            <s:password name="user.password" label="密码"/>
+            <s:textfield name="user.sex" label="性别"/>
+            <s:textfield name="user.age" label="年龄"/>
+            <s:submit value="注册"/>
+        </s:form>
+    </header>
+</body>
+</html>
+```
+登录页面
+```
+<%@ page contentType="text/html;Charset=UTF-8" pageEncoding="UTF-8" language = "java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "s" uri = "/struts-tags"%>
+<%@ taglib prefix="" tagdir="/WEB-INF/tags"%>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv = "Content-Type" content = "text/html charset=UTF-8">
+	<title>Login</title>
+</head>
+<body>
+    <header>
+        <s:form action="login" method="post">
+            <s:textfield name="user.name" label="用名"/>
+            <s:password name="user.password" label="密码"/>
+            <s:submit value="登录"/>
+        </s:form>
+    </header>
+</body>
+</html>
+```
