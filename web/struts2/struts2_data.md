@@ -1,7 +1,147 @@
-#  struts2中的共享数据
+#  struts2中的共享数据传递
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-27 08:32
 
+# [传递对象参数](https://blog.csdn.net/qq_24448899/article/details/76339443)
+## Struts2能传递哪些参数？
+在Struts2中，框架替我们做了很多便利的事，比如，我们可以通过表单组件的name，来决定传递的数据在Action中被解析成普通参数、对象、List、还是Map
+
+## 传递形式
+Action中要获取页面传递过来的参数，只需要在Action中定义成员变量并且提供设置器(Setter)和获取器(Getter)，Struts2就会帮我们把数据封装进去。传递对象也一样，页面中填的依旧是字符串，只不过到了Action之后框架会根据参数的名称name来判读要“组装”成什么样的参数。
+
+## 代码
+下面就以Person，List<Person>, Map<String, Person>接收参数为例：
+
+Person.java
+
+```java
+package action;
+
+import java.io.Serializable;
+
+public class Person implements Serializable{
+    @Override
+    public String toString() {
+        return "Person [name=" + name + ", age=" + age + "]";
+    }
+    private String name;
+    private int age;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+```
+
+ArgsTestAction.java
+```
+package action;
+
+import java.util.List;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class ArgsTestAction extends ActionSupport {
+    //装参数的变量们
+    private Person person;
+    private List<Person> personList;
+    private Map<String,Person> personMap;
+
+    public String comeOn(){
+        System.out.println(person.toString());
+
+        System.out.println("\nlist of person:");
+        for(Person p : personList){
+            System.out.println(p);
+        }
+
+        System.out.println("\nmap of person:");
+        for(String key : personMap.keySet()){
+            System.out.println(personMap.get(key));
+        }
+        return SUCCESS;
+    }
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+
+    public Map<String, Person> getPersonMap() {
+        return personMap;
+    }
+
+    public void setPersonMap(Map<String, Person> personMap) {
+        this.personMap = personMap;
+    }
+}
+```
+
+配置文件struts.xml
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <!-- namespace要用"/" action不用-->
+    <package name="test" extends="struts-default" namespace="/test">
+        <action name="comeOn" class="action.ArgsTestAction" method="comeOn">
+            <result name="success">/success.jsp</result>
+        </action>
+
+    </package>
+</struts>
+```
+
+输入页面input.jsp
+```
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <form action="${pageContext.request.contextPath }/test/comeOn" method="post">
+        <!-- Person对象传递，使用"Action定义的对象名.对象属性"形式获取 -->
+        用户1 >>>姓名：<input type="text" name="person.name">年龄：<input type="text" name="person.age"><br>
+
+        <!-- List对象传递，使用"Action定义的List名.[坐标].对象属性"形式获取 -->
+        用户2 >>>姓名：<input type="text" name="personList[0].name">年龄：<input type="text" name="personList[0].age"><br>
+        用户3 >>>姓名：<input type="text" name="personList[1].name">年龄：<input type="text" name="personList[1].age"><br>
+
+        <!-- Map对象传递，使用"Action定义的Map名.[key].对象属性"形式获取 -->
+        用户4 >>>姓名：<input type="text" name="personMap['no1'].name">年龄：<input type="text" name="personMap['no1'].age"><br>
+        用户5 >>>姓名：<input type="text" name="personMap['no2'].name">年龄：<input type="text" name="personMap['no2'].age"><br>
+        <input type="submit">
+    </form>
+</body>
+</html>
+```
+
+# 共享数据
 ## 一、解耦合
 #### 类
 java代码
