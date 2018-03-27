@@ -6,7 +6,7 @@
 Action类需要继承com.opensymphony.xwork2.ActionSupport类;
 执行validate()方法中添加了校验信息，则将会根据Action的配置跳转到name为input的视图去。
 
-## [struts2标签] (https://struts.apache.org/tag-developers/tag-reference.html)
+## [struts2标签](https://struts.apache.org/tag-developers/tag-reference.html)
 ### UI标签
 ### 通用标签
 
