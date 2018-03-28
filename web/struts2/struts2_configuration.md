@@ -162,6 +162,22 @@ struts.xml
 </html>
 ```
 #### Action中的动态方法调用(可以减少Action类和action子元素的代码量)(具有相同的action子元素)
+新版本需要添加：
+struts.xml
+```
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <package name="ds" namespace="/" extends="struts-default">
+        <action name="*Userd" class="org.hua.struts.action.UserAction">
+            <result name="login">/success.jsp</result>
+            <result name="register">/success.jsp</result>
+			<!-- 新版本需要添加的 -->
+            <allowed-methods>login,register</allowed-methods>
+        </action>
+	</package>
+</struts>
+```
+示例：
 ```java
     ...
     public String login()
@@ -193,13 +209,18 @@ struts.xml
 
 <struts>
     <constant name="struts.devMode" value="true" />
-    <package name="user" namespace="" extends="struts-default">
+    <package name="ds" namespace="/" extends="struts-default">
+        <action name="*Userd" class="org.hua.struts.action.UserAction">
+            <result name="login">/success.jsp</result>
+            <result name="register">/success.jsp</result>
+            <allowed-methods>login,register</allowed-methods>
+        </action>
         <action name="login" class="org.hua.struts.action.UserAction" method="login">
-            <result name="success">/success.jsp</result>
+            <result name="login">/success.jsp</result>
         </action>
 
         <action name="register" class="org.hua.struts.action.UserAction" method="register">
-            <result name="success">/success.jsp</result>
+            <result name="register">/success.jsp</result>
         </action>
     </package>
 </struts>
