@@ -277,8 +277,10 @@ struts.xml
 </html>
 ```
 
-#### Action
+#### 通配符
+必须配置method值，
 ```java
+<!-- {1}表示匹配的第一个字符，例url是studentLogin,则匹配的是Action中的login()方法 -->
 <action name="student*" class="com.itmyhome.StudentAction" method="{1}">  
      <result name="{1}">/student{1}.jsp</result>  
 </action>  
@@ -293,7 +295,7 @@ studentdelete就会调用StudentAction中的delete方法 然后跳转到studentd
 
                      Struts2支持动态方法调用，它指的是一个Action中有多个方法，系统根据表单元素给定的action来访问不同的方法，而不用写多个Action。
 
-## 配置默认的Action
+#### 配置默认的Action
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
