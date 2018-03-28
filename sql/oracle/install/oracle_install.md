@@ -140,3 +140,5 @@ Check /u01/app/oracle/product/12.2.0/dbhome_1/install/root_12col7-112.example.co
 ![oracle install](./picture/oracle_install05.jpg)
 ![oracle install](./picture/oracle_install06.jpg)
 ![oracle install](./picture/oracle_install07.jpg)
+
+## [安装数据库](../database/create_database/create_database.md)
