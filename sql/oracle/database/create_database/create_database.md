@@ -2,6 +2,8 @@
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-25 15:32
 
+## 静默安装数据库
+
 ## dbca方式安装(图形化安装)
 1. 可以选择创建或者管理数据库
 ![create database](../picture/create_database01.jpg)
@@ -48,3 +50,4 @@
 ![create database](../picture/create_database17.jpg)
 
 ![create database](../picture/create_database18.jpg)
+
