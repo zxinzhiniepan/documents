@@ -369,6 +369,29 @@ struts.xml
     </package>
 ```
 
+不同包下的动态
+```
+    <package name="usera" namespace="/" extends="struts-default">
+        <action name="login" class="org.hua.struts.action.UserAction" method="login">
+			<!-- 读取action中的k值 -->
+            <!--
+            <result name="login">${k}</result>
+            -->
+            <result name="login">
+                <param name="name">${k}</param>
+                <param name="namespace">namespace</param>
+            </result>
+        </action>
+
+        <action name="common" class="org.hua.struts.action.UserAction" method="register">
+            <result name="register">/success.jsp</result>
+        </action>
+        <action name="manager" class="org.hua.struts.action.UserAction" method="register">
+            <result name="register">/success.jsp</result>
+        </action>
+    </package>
+```
+
 ## 全局结果
 struts.xml
 ```
