@@ -3,7 +3,7 @@
  - DATE: 2018-03-29 08:48
 
 ## 理解拦截器
-![struts2_architecture](../picture/struts2_architecture.png "Struts2体系结构图")[Struts2体系结构图]
+![struts2_architecture](../picture/struts2_architecture.png "Struts2体系结构图")
 
 ## 配置拦截器
 
