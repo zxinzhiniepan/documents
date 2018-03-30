@@ -2,8 +2,7 @@
  - AUTHOR: xinzhiniepan
  - DATE: 2018-03-29 08:48
 
-## 理解拦截器
-![struts2_architecture](../picture/struts2_architecture.png "Struts2体系结构图")
+## 理解拦截器 ![struts2_architecture](../picture/struts2_architecture.png "Struts2体系结构图")
 
 ### 我对拦截器的一点理解
 拦截器链是通过字符串来连接的，
@@ -192,5 +191,228 @@ struts.xml
 ### 继承AbstractInterceptor抽象方法
 
 #### 文件下载
+参数名要一致
+java
+```
+package org.hua.struts.action;
+
+ 
+/**
+ * @author xinzhiniepan
+ * @version 1.0
+ * @since 2018-03-30 09:43:29
+ */
+import java.io.FileInputStream;
+import java.io.InputStream;
+import org.apache.struts2.ServletActionContext;
+import java.io.BufferedInputStream;
+public class DownLoadAction
+{
+    private String inputPath;
+    private String fileName;
+    private InputStream inputStream;
+
+    public String download()
+    {
+        return "download";
+    }
+
+    public void setInputPath(String inputPath)
+    {
+        this.inputPath = inputPath;
+    }
+
+    public String getInputPath()
+    {
+        return inputPath;
+    }
+
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
+
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+    public void setInputStream(InputStream inputStream)
+    {
+        this.inputStream = inputStream;
+    }
+
+    
+    public InputStream getInputStream() throws Exception
+    {
+        String path = ServletActionContext.getServletContext().getRealPath(inputPath);
+
+        System.out.println("战法大赛的符" + path + "   " + fileName);
+
+        return new BufferedInputStream(new FileInputStream(path + "/" + fileName));
+    }
+}
+```
+
+struts.xml
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <package name="fileDownloads" namespace="/download" extends="struts-default">
+        <action name="pic" class="org.hua.struts.action.DownLoadAction" method="download">
+                <param name="inputPath">/upload</param>
+            <result name="download" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">2048</param>
+            </result>
+        </action>
+    </package>
+</struts>
+
+```
+
+jsp
+```
+...
+    <a href="download/pic?fileName=twob03.jpeg">下载</a>
+...
+```
 
 #### 文件上传
+PS: Action中的三个属性要相匹配，这三个属性中改变的只能是uploads;
+上传的文件`
+List<File> uploads;
+上传的文件名
+List<String> uploadsName;
+上传的文件类型
+List<String> uploadsContentType;
+
+```java
+package org.hua.struts.action;
+
+ 
+/**
+ * @author xinzhiniepan
+ * @version 1.0
+ * @since 2018-03-30 00:22:53
+ */
+import org.apache.struts2.ServletActionContext;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+import com.opensymphony.xwork2.ActionSupport;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+public class UploadAction
+{
+    private List<File> uploads;
+    private List<String> uploadsFileName;
+    private List<String> uploadsContentType;
+    private String savePath;
+
+    private static final Logger logger = LogManager.getLogger();
+
+    /**
+     * 多文件上传
+     * @return 返回的视图名
+     */
+    public String uploadMultiFile() throws Exception
+    {
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+
+        for(int i = 0; i < uploads.size(); i++)
+        {
+            fis = new FileInputStream(getUploads().get(i));
+
+            fos = new FileOutputStream(getSavePath() + "/" + getUploadsFileName().get(i));
+
+            int length = fis.read(buffer);
+
+            while(length > 0)
+            {
+                fos.write(buffer, 0, length);
+                length = fis.read(buffer);
+            }
+        }
+
+        fis.close();
+        fos.flush();
+        fos.close();
+        return "success";
+    }
+
+
+    public void setUploads(List<File> uploads)
+    {
+        this.uploads = uploads;
+    }
+
+    public List<File>  getUploads()
+    {
+        return uploads;
+    }
+
+    public void setUploadsFileName(List<String> uploadsFileName)
+    {
+        this.uploadsFileName = uploadsFileName;
+    }
+
+    public List<String> getUploadsFileName()
+    {
+        return uploadsFileName;
+    }
+
+    public void setUploadsContentType(List<String> uploadsContentType)
+    {
+        this.uploadsContentType = uploadsContentType;
+    }
+
+    public List<String> getUploadsContentType()
+    {
+        return uploadsContentType;
+    }
+
+    public void setSavePath(String savePath)
+    {
+        this.savePath = savePath;
+    }
+
+    public String getSavePath()
+    {
+        return ServletActionContext.getServletContext().getRealPath(savePath);
+    }
+}
+```
+
+struts.xml
+```
+...
+        <action name="uploadMultiFile" class="org.hua.struts.action.UploadAction" method="uploadMultiFile">
+            <param name="savePath">/upload</param>
+            <result name="success">/upload_success.jsp</result>
+        </action>
+...
+```
+
+jsp
+```jsp
+    <s:form action="uploadSingle.action" enctype="multipart/form-data" method="post">
+        <s:textfield name="title" label="标题"/>
+        <s:file name="uploads" label="选择文件"/>
+        <s:file name="uploads" label="选择文件"/>
+        <s:file name="uploads" label="选择文件"/>
+        <s:file name="uploads" label="选择文件"/>
+        <s:submit value="上传" />
+    </s:form>
+
+```
