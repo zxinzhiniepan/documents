@@ -5,6 +5,11 @@
 ## 理解拦截器
 ![struts2_architecture](../picture/struts2_architecture.png "Struts2体系结构图")
 
+### 我对拦截器的一点理解
+拦截器链是通过字符串来连接的，
+所谓的终止执行时在跳出方法时不执行ActionInvocation.invoke()方法
+通过改变拦截器的返回值可以改变相应的访问结果(改变响应的视图)
+
 ## 配置拦截器
 
 ### 配置
@@ -43,9 +48,8 @@ struts.xml
                 <interceptor-ref name="defaultStack"></interceptor-ref>
             </interceptor-stack>
         </interceptors>
-        <!-- 定义默认的拦截器引用  -->
-        <default-interceptor-ref>
-                <interceptor-ref name="defaultStack"></interceptor-ref>
+        <!-- 定义默认的拦截器引用只有一个，多个的化定义成一个拦截器栈  -->
+        <default-interceptor-ref name="defaultStack">
         </default-interceptor-ref>
 
         <action name="*User" class="org.hua.struts.action.UserAction" method="{1}">
@@ -82,10 +86,111 @@ defaultStack拦截器栈
 
 
 ##  自定义拦截器
-### 继承AbstractInterceptor抽象方法
-
-
 ### 实现Interceptor接口
 void init()
 void destroy()
 String intercept(ActionInvocation invocation) throws Exception
+java
+```
+package org.hua.struts.action.interceptor;
+
+ 
+/**
+ * @author xinzhiniepan
+ * @version 1.0
+ * @since 2018-03-29 22:25:29
+ */
+import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.opensymphony.xwork2.Action;
+import org.hua.struts.pojo.User;
+import java.util.Map;
+import com.opensymphony.xwork2.ActionInvocation;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+public class LoginInterceptor implements Interceptor
+{
+    private static final Logger logger = LogManager.getLogger();
+
+    @Override
+    public void init()
+    {
+        logger.info("初始化权限拦截器!");
+    }
+
+    @Override
+    public void destroy()
+    {
+        logger.info("销毁权限拦截器!");
+    }
+
+    @Override
+    public String intercept(ActionInvocation invocation) throws Exception
+    {
+        logger.info("开始权限拦截器!");
+        Map session = invocation.getInvocationContext().getSession();
+        User user = (User)session.get("user");
+        if(user == null)
+        {
+            logger.info("返回首页!");
+            return "logina"; // 一个action的result的name值, 以便完成相关操作
+        }
+        else
+        {
+            logger.info("登录成功!");
+            return invocation.invoke();
+        }
+    }
+}
+```
+
+struts.xml
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <package name="ds" namespace="/" extends="struts-default">
+        <interceptors>
+            <!-- 定义拦截器 -->
+            <interceptor name = "timetest" class = "org.hua.struts.action.interceptor.MytimerInterceptor" />
+            <interceptor name = "authorization" class = "org.hua.struts.action.interceptor.LoginInterceptor" />
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="timetest"/>
+            </interceptor-stack>
+        </interceptors>
+        <!-- 定义默认的拦截器引用  -->
+        <default-interceptor-ref name="mydefault"/>
+
+        <global-results>
+            <result name="logina">/login.jsp</result>
+        </global-results>
+
+        <action name="*User" class="org.hua.struts.action.UserAction" method="{1}">
+            <result name="login">/success.jsp</result>
+            <result name="register">/success.jsp</result>
+            <allowed-methods>login,register</allowed-methods>
+        </action>
+        <action name="login" class="org.hua.struts.action.UserAction" method="login">
+            <result name="login">/success.jsp</result>
+        </action>
+
+        <action name="register" class="org.hua.struts.action.UserAction" method="register">
+            <interceptor-ref name="authorization"/>
+            <result name="register">/success.jsp</result>
+        </action>
+    </package>
+</struts>
+
+```
+
+<b>PS: 根据拦截器运行的特点，可以知道拦截器只会拦截请求Action的请求。直接请求页面没有效果</b>
+
+### 继承AbstractInterceptor抽象方法
+
+#### 文件下载
+
+#### 文件上传
