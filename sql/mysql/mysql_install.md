@@ -5,7 +5,7 @@
 # mysql的安装和配置文件
 ## 安装准备
 ###源码编译安装mysql
-* [office](https://dev.mysql.com/doc/refman/5.7/en/installing.html "https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar")
+* [官方下载地址](https://dev.mysql.com/doc/refman/5.7/en/installing.html "office")
 
 ### 安装依赖包
 ### 下载相应的源码包
