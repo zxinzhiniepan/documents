@@ -5,14 +5,18 @@
 # mysql的安装和配置文件
 ## 安装准备
 ###源码编译安装mysql
-* 官方文档地址：https://dev.mysql.com/doc/refman/5.7/en/installing.html
+* [office](https://dev.mysql.com/doc/refman/5.7/en/installing.html "https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar")
 
 ### 安装依赖包
 ### 下载相应的源码包
 ###新建MySql用户和用户组
+
 \#Preconfiguration setup
-    groupadd mysql
-    useradd -r -g mysql -s /bin/false mysql
+```
+$ groupadd mysql
+$ useradd -r -g mysql -s /bin/false mysql
+```
+
 ### 预编译
     cmake .. -DCMAKE_INSTALL_PREFIX=/opt/databases/mysql/bin \
         -DMYSQL_DATADIR=/opt/databases/mysql/bin/data/mysql \
