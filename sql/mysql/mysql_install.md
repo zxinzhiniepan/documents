@@ -58,7 +58,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=${MYSQL_INSTALL_HOME} \
          --basedir=/opt/mysql/mysql
          --datadir=/opt/mysql/mysql/data
 #### 指定my.ini文件
-    ../bin/mysqld --defaults-file=/opt/databases/mysql/bin/etc/my.cnf  
+    ../bin/mysqld --defaults-file=/opt/mybin/mysql/mysql5721/etc/my.cnf  
         --initialize-insecure 
         --user=mysql
 ### 自动提供安全连接
