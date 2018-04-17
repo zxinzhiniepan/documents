@@ -18,16 +18,28 @@ $ useradd -r -g mysql -s /bin/false mysql
 ```
 
 ### 预编译
-    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/databases/mysql/bin \
-        -DMYSQL_DATADIR=/opt/databases/mysql/bin/data/mysql \
-        -DWITH_BOOST=/home/zhanghua/.opt/databases/mysql/distfiles/tmp/mysql-5.7.21/boost/boost_1_59_0 \
-        -DSYSCONFDIR=/opt/databases/mysql/bin/etc \
-        -DWITH_INNOBASE_STORAGE_ENGINE=1 \
-        -DWITH_PARTITION_STORAGE_ENGINE=1 \
-        -DWITH_FEDERATED_STORAGE_ENGINE=1 \
-        -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
-        -DWITH_MYISAM_STORAGE_ENGINE=1 \
-        -DENABLED_LOCAL_INFILE=1 \         
+```
+#/bin/bash
+MYSQL_INSTALL_HOME=/opt/mybin/mysql/mysql5721
+cmake .. -DCMAKE_INSTALL_PREFIX=${MYSQL_INSTALL_HOME} \
+    -DINSTALL_MYSQLDATADIR="${bpath}/data" \
+    -DMYSQL_DATADIR=${MYSQL_INSTALL_HOME}/data \
+    -DTMPDIR=${MYSQL_INSTALL_HOME}/tmp \
+    -DSYSTEMD_PID_DIR=${MYSQL_INSTALL_HOME}/tmp \
+    -DMYSQL_UNIX_ADDR=${MYSQL_INSTALL_HOME}/tmp/mysql.sock  \
+    -DSYSCONFDIR=${MYSQL_INSTALL_HOME}/etc \
+    -DSYSCONFDIR=${MYSQL_INSTALL_HOME}/etc \
+    -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+    -DWITH_PARTITION_STORAGE_ENGINE=1 \
+    -DWITH_FEDERATED_STORAGE_ENGINE=1 \
+    -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+    -DWITH_MYISAM_STORAGE_ENGINE=1 \
+    -DDEFAULT_CHARSET=utf8  \
+    -DDEFAULT_COLLATION=utf8_general_ci \
+    -DWITH_EXTRA_CHARSETS=all \
+    -DENABLED_LOCAL_INFILE=1 \
+    -DWITH_BOOST=/opt/mybin/mysql/tmp/mysql-5.7.21/boost/boost_1_59_0/ \
+```
 ### 编译安装
     make -j 6
     sudo make install
