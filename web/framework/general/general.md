@@ -133,7 +133,7 @@ buildscript {
 }
 ```
 
-[jpgp](http://sjyuan.cc/junit5/5.0.2/user-guide-cn/#42-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E6%94%AF%E6%8C%81 "junit-platform-gradle-plugin插件配置(在build.gradle中的配置)")
+[junit-platform-gradle-plugin插件配置(在build.gradle中的配置)](http://sjyuan.cc/junit5/5.0.2/user-guide-cn/#42-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E6%94%AF%E6%8C%81 "jpgp")
 ```
 junitPlatform {
 	// platformVersion '1.2.0-M1'
@@ -157,5 +157,5 @@ junitPlatform {
 ### web服务器配置
 #### jar包配置
 
-#### [gretty](http://akhikhl.github.io/gretty-doc/Getting-started.html "插件配置和管理(gretty)")
+#### [插件配置和管理(gretty)](http://akhikhl.github.io/gretty-doc/Getting-started.html "gretty")
 

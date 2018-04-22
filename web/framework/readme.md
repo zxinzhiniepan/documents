@@ -2,7 +2,7 @@
  - AUTHOR: xinzhiniepan
  - DATE: 2018-04-22 17:03
 
-## [ssm](ssm/wiki.md "ssm框架整合")
+## [ssm框架整合](ssm/wiki.md "ssm")
 
-## [general](general/general.md "项目环境的搭建一些问题")
+## [项目环境的搭建一些问题](general/general.md "general")
 
